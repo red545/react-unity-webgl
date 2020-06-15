@@ -12,7 +12,7 @@ export default class UnityContent {
    * @type {string}
    * @private
    */
-  public buildJsonPath: string;
+  public buildJsonPath: object;
 
   /**
    * the relative path to the unity loader javascript file.
@@ -74,7 +74,7 @@ export default class UnityContent {
    * @param {IUnityConfig} unityConfig the Unity configuration that will be used to start the player.
    */
   constructor(
-    buildJsonPath: string,
+    buildJsonPath: object,
     unityLoaderJsPath: string,
     unityConfig?: IUnityConfig
   ) {
@@ -96,7 +96,7 @@ export default class UnityContent {
 
   /**
    * Binds a unity component to this content.
-   * @param unityComponentInstance the unity component that will be binded to this content.
+   * @param unityComponentInstance the unity component that will be bound to this content.
    * @public
    */
   public setComponentInstance(unityComponentInstance: UnityComponent): void {
@@ -105,7 +105,7 @@ export default class UnityContent {
 
   /**
    * Binds a unity player to this content.
-   * @param unityPlayerInstance the unity component that will be binded to this content.
+   * @param unityPlayerInstance the unity component that will be bound to this content.
    * @public
    */
   public setUnityInstance(unityInstance: UnityInstance): void {

@@ -4,6 +4,8 @@ import IUnityState from "../interfaces/IUnityState";
 import UnityContent from "../UnityContent";
 import UnityLoaderService from "../services/UnityLoaderService";
 import "../declarations/UnityLoader";
+declare function createUnityInstance( canvas: any, settings: any) : any; // just change here from arun answer.
+
 import "../declarations/UnityInstance";
 import "../declarations/ReactUnityWebgl";
 
@@ -104,18 +106,27 @@ export default class Unity extends React.Component<IUnityProps, IUnityState> {
     window.addEventListener("resize", this.onWindowResizeBinding);
     // prettier-ignore
     this.unityLoaderService.append(this.props.unityContent.unityLoaderJsPath, () => {
-      UnityLoader.Error.handler = _message => {
-        this.unityContent.triggerUnityEvent("error", _message);
-        console.error("React Unity WebGL", _message);
-      };
-      this.unityContent.setUnityInstance(UnityLoader.instantiate(
-        `__ReactUnityWebGL_${ this.props.unityContent.uniqueID}__`,
-        this.props.unityContent.buildJsonPath, {
-          onProgress: this.onProgress.bind(this),
-          Module: this.props.unityContent.unityConfig.modules,
-          width: "100%",
-          height: "100%"
-        }));
+
+      // TODO CREATE CANVAS
+
+      createUnityInstance(document.querySelector("#canvas"), this.props.unityContent.buildJsonPath).then((unityInstance: any) => {
+          console.log('creating a unity instance');
+          this.unityContent.setUnityInstance(unityInstance);
+          // this.unityContent.triggerUnityEvent("loaded"); // TODO: not sure if this really works but it could or even needed?
+      });
+
+      // UnityLoader.Error.handler = _message => {
+      //   this.unityContent.triggerUnityEvent("error", _message);
+      //   console.error("React Unity WebGL", _message);
+      // };
+      // this.unityContent.setUnityInstance(UnityLoader.instantiate(
+      //   `__ReactUnityWebGL_${ this.props.unityContent.uniqueID}__`,
+      //   this.props.unityContent.buildJsonPath, {
+      //     onProgress: this.onProgress.bind(this),
+      //     Module: this.props.unityContent.unityConfig.modules,
+      //     width: "100%",
+      //     height: "100%"
+      //   }));
       }
     );
   }

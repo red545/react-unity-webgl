@@ -46,8 +46,8 @@ export default class UnityLoaderService {
             this.unityLoaderScript.async = true;
             this.unityLoaderScript.src = source;
             this.unityLoaderScript.onload = () => {
-              if (typeof (window as any).UnityLoader === "undefined")
-                return loggingService.errorUnityLoaderNotFound();
+              if (typeof (window as any).createUnityInstance === "undefined") // TODO: refactor just checking if this would work otherwise
+                return loggingService.errorUnityLoaderNotFound("❌ unity loader  ==== undefined");
               onLoad();
             };
             this.documentHead.appendChild(this.unityLoaderScript);
